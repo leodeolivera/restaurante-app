@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { supabase } from "./supabase.js";
 
 const API = "";
 // Menu exemplo (ajuste como quiser)
@@ -43,28 +44,93 @@ function formatBRL(v) {
   });
 }
 
+
+// ================= SUPABASE API =================
+
+// GET
 async function apiGet(path) {
-  const r = await fetch("./db.json");
-  if (!r.ok) throw new Error(`GET db.json -> ${r.status}`);
-  const data = await r.json();
+  if (path === "/mesas") {
+    const { data, error } = await supabase
+      .from("mesas")
+      .select("*")
+      .order("created_at", { ascending: true });
 
-  // path vem tipo "/mesas" ou "/pedidos"
-  const key = path.replace("/", "");
-  return data[key];
+    if (error) {
+      console.error("Erro GET mesas:", error);
+      return [];
+    }
+
+    return data ?? [];
+  }
+
+  return [];
 }
 
+// POST (criar mesa)
 async function apiPost(path, body) {
-  console.warn("GitHub Pages: sem backend. POST não salva.", path, body);
-  return body; // só devolve
+  if (path === "/mesas") {
+    const { data, error } = await supabase
+      .from("mesas")
+      .insert({
+        numero: body.numero ?? body.idMesa ?? "",
+        pedidos: body.pedidos ?? []
+      })
+      .select("*")
+      .single();
+
+    if (error) {
+      console.error("Erro POST mesa:", error);
+      return null;
+    }
+
+    return data;
+  }
+
+  return null;
 }
 
+// PUT (atualizar mesa)
 async function apiPut(path, body) {
-  console.warn("GitHub Pages: sem backend. PUT não salva.", path, body);
-  return body;
+  if (path.startsWith("/mesas/")) {
+    const id = Number(path.split("/")[2]);
+
+    const { data, error } = await supabase
+      .from("mesas")
+      .update(body)
+      .eq("id", id)
+      .select("*")
+      .single();
+
+    if (error) {
+      console.error("Erro PUT mesa:", error);
+      return null;
+    }
+
+    return data;
+  }
+
+  return null;
 }
+
+// DELETE
 async function apiDel(path) {
-  console.warn("GitHub Pages: sem backend. DELETE não salva.", path);
-  return true;
+  if (path.startsWith("/mesas/")) {
+    const id = Number(path.split("/")[2]);
+
+    const { error } = await supabase
+      .from("mesas")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Erro DELETE mesa:", error);
+      return false;
+    }
+
+    return true;
+  }
+
+  return false;
 }
 
 export default function App() {
@@ -277,26 +343,21 @@ setTick(t => t + 1);
     }
   }
 
-  async function apagarTudo() {
-    if (!confirm("Apagar tudo do sistema? (mesas e histórico)")) return;
-    try {
-      const [mesasDb, pedidosDb] = await Promise.all([
-        apiGet("/mesas"),
-        apiGet("/pedidos"),
-      ]);
-      for (const m of mesasDb) await apiDel(`/mesas/${m.id}`);
-      for (const p of pedidosDb) await apiDel(`/pedidos/${p.id}`);
+ function apagarTudo() {
+  if (!confirm("Apagar tudo do sistema? (mesas e histórico)")) return;
 
-      setMesasAbertas([]);
-      setHistorico([]);
-      setMesaInput("");
-      setTab("pedidos");
-      alert("Tudo apagado ✅");
-    } catch (e) {
-      console.error("Erro ao apagar tudo:", e);
-      alert("Deu erro ao apagar. Veja o console.");
-    }
+  try {
+    setMesasAbertas([]);
+    setHistorico([]);
+    setMesaInput("");
+    setTab("pedidos");
+
+    alert("Tudo apagado ✅");
+  } catch (e) {
+    console.error("Erro ao apagar tudo:", e);
+    alert("Deu erro ao apagar. Veja o console.");
   }
+}
 
   function totalMesa(mesa) {
     return (mesa.itens || []).reduce(
