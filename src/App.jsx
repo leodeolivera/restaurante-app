@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-const API = "http://192.168.86.9:3002";
-
+const API = "";
 // Menu exemplo (ajuste como quiser)
 const MENU = [
   { id: "marmita_p", nome: "Marmita Pequena", setor: "cozinha", preco: 18 },
@@ -45,34 +44,26 @@ function formatBRL(v) {
 }
 
 async function apiGet(path) {
-  const r = await fetch(`${API}${path}`);
-  if (!r.ok) throw new Error(`GET ${path} -> ${r.status}`);
-  return r.json();
+  const r = await fetch("./db.json");
+  if (!r.ok) throw new Error(`GET db.json -> ${r.status}`);
+  const data = await r.json();
+
+  // path vem tipo "/mesas" ou "/pedidos"
+  const key = path.replace("/", "");
+  return data[key];
 }
 
 async function apiPost(path, body) {
-  const r = await fetch(`${API}${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!r.ok) throw new Error(`POST ${path} -> ${r.status}`);
-  return r.json();
+  console.warn("GitHub Pages: sem backend. POST não salva.", path, body);
+  return body; // só devolve
 }
 
 async function apiPut(path, body) {
-  const r = await fetch(`${API}${path}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!r.ok) throw new Error(`PUT ${path} -> ${r.status}`);
-  return r.json();
+  console.warn("GitHub Pages: sem backend. PUT não salva.", path, body);
+  return body;
 }
-
 async function apiDel(path) {
-  const r = await fetch(`${API}${path}`, { method: "DELETE" });
-  if (!r.ok) throw new Error(`DELETE ${path} -> ${r.status}`);
+  console.warn("GitHub Pages: sem backend. DELETE não salva.", path);
   return true;
 }
 
