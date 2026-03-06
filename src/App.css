@@ -1,42 +1,419 @@
-#root {
-  max-width: 1280px;
+/* =========================
+   APP PREMIUM - App.css
+   (Botões coloridos + fundo top + glass + responsivo)
+   ========================= */
+
+/* Fonte opcional (se quiser): no index.html coloque:
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+*/
+
+:root{
+  --bg-img: url("./assets/bg.jpg"); /* <<< TROQUE AQUI se o nome/local mudar */
+  --bg-dark: rgba(10, 12, 18, 0.72);
+  --glass: rgba(255,255,255,0.10);
+  --glass2: rgba(255,255,255,0.14);
+  --stroke: rgba(255,255,255,0.16);
+  --stroke2: rgba(17,24,39,0.16);
+  --shadow: 0 18px 60px rgba(0,0,0,0.35);
+  --shadow2: 0 14px 30px rgba(0,0,0,0.25);
+
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.72);
+
+  /* Cores premium */
+  --primary: #2563eb;  /* azul */
+  --success: #16a34a;  /* verde */
+  --warning: #f59e0b;  /* amarelo */
+  --danger:  #dc2626;  /* vermelho */
+  --pink:    #db2777;
+  --purple:  #7c3aed;
+  --teal:    #14b8a6;
+  --graybtn: rgba(255,255,255,0.14);
+}
+
+*{ box-sizing: border-box; }
+html, body { height: 100%; }
+
+body{
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 800px at 10% 10%, rgba(37,99,235,0.28), transparent 55%),
+    radial-gradient(1200px 800px at 80% 20%, rgba(219,39,119,0.25), transparent 55%),
+    radial-gradient(900px 700px at 50% 100%, rgba(20,184,166,0.18), transparent 55%),
+    linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
+    var(--bg-img);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* ===== containers ===== */
+#root{
+  min-height: 100vh;
+}
+
+.app-shell{
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 18px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+@media (max-width: 520px){
+  .app-shell{ padding: 12px; }
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ===== topo ===== */
+.app-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo{
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+  border: 1px solid var(--stroke);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow2);
+  backdrop-filter: blur(10px);
+}
+
+.brand-title{
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  font-size: 18px;
+}
+
+.brand-sub{
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ===== tabs ===== */
+.tabs{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tab{
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,0.10);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .08s ease, background .18s ease, border-color .18s ease;
+  backdrop-filter: blur(10px);
+}
+
+.tab:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.14); }
+.tab:active{ transform: translateY(0px) scale(0.98); }
+
+.tab.active{
+  background: linear-gradient(135deg, rgba(37,99,235,0.95), rgba(124,58,237,0.85));
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 18px 40px rgba(37,99,235,0.22);
+}
+
+/* ===== cards glass ===== */
+.card{
+  background: rgba(255,255,255,0.10);
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.card h3, .card-title{
+  margin: 0 0 10px 0;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+/* ===== grids ===== */
+.grid-2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.grid-1{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 900px){
+  .grid-2{ grid-template-columns: 1fr; }
+}
+
+/* ===== inputs ===== */
+.input{
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.28);
+  color: var(--text);
+  outline: none;
+  transition: border-color .18s ease, background .18s ease;
+}
+
+.input::placeholder{ color: rgba(255,255,255,0.55); }
+.input:focus{
+  border-color: rgba(37,99,235,0.7);
+  background: rgba(0,0,0,0.34);
+}
+
+/* ===== linhas e listas ===== */
+.list{
+  display: grid;
+  gap: 10px;
+}
+
+.item{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.22);
+  backdrop-filter: blur(10px);
+}
+
+.item strong{ font-weight: 900; }
+
+/* ===== badges ===== */
+.badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.10);
+}
+
+.badge.open{ background: rgba(22,163,74,0.20); border-color: rgba(22,163,74,0.35); }
+.badge.closed{ background: rgba(245,158,11,0.22); border-color: rgba(245,158,11,0.40); }
+.badge.ready{ background: rgba(37,99,235,0.22); border-color: rgba(37,99,235,0.40); }
+.badge.bar{ background: rgba(219,39,119,0.20); border-color: rgba(219,39,119,0.38); }
+.badge.cozinha{ background: rgba(20,184,166,0.20); border-color: rgba(20,184,166,0.38); }
+
+/* ===== BOTÕES COLORIDOS (premium) ===== */
+.btn{
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.12);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .08s ease, filter .18s ease, background .18s ease;
+  user-select: none;
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+
+.btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+.btn:active{ transform: translateY(0px) scale(0.98); }
+
+.btn-primary{
+  background: linear-gradient(135deg, rgba(37,99,235,0.95), rgba(124,58,237,0.85));
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 18px 34px rgba(37,99,235,0.18);
+}
+
+.btn-success{
+  background: linear-gradient(135deg, rgba(22,163,74,0.95), rgba(20,184,166,0.82));
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 18px 34px rgba(22,163,74,0.16);
+}
+
+.btn-warning{
+  background: linear-gradient(135deg, rgba(245,158,11,0.95), rgba(234,88,12,0.82));
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 18px 34px rgba(245,158,11,0.14);
+}
+
+.btn-danger{
+  background: linear-gradient(135deg, rgba(220,38,38,0.95), rgba(219,39,119,0.78));
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 18px 34px rgba(220,38,38,0.14);
+}
+
+.btn-ghost{
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.16);
+}
+
+.btn-small{ padding: 8px 10px; border-radius: 12px; font-weight: 900; }
+
+/* ===== modal premium ===== */
+.modal-back{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.60);
+  display: grid;
+  place-items: center;
+  padding: 14px;
+  z-index: 50;
+}
+
+.modal{
+  width: min(980px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background:
+    radial-gradient(1000px 700px at 20% 20%, rgba(37,99,235,0.14), transparent 60%),
+    radial-gradient(900px 600px at 80% 10%, rgba(219,39,119,0.14), transparent 60%),
+    rgba(8,10,14,0.80);
+  box-shadow: 0 40px 90px rgba(0,0,0,0.55);
+  padding: 14px;
+  backdrop-filter: blur(14px);
+}
+
+.modal-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-title{
+  margin: 0;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.modal-sub{
+  margin: 6px 0 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ===== categorias no modal ===== */
+.cat-row{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.cat{
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.10);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .08s ease, background .18s ease;
+}
+
+.cat:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.14); }
+.cat.active{
+  background: linear-gradient(135deg, rgba(20,184,166,0.85), rgba(37,99,235,0.85));
+  border-color: rgba(255,255,255,0.22);
+}
+
+/* ===== grid de produtos (colunas) ===== */
+.produtos-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+@media (max-width: 900px){
+
+.appGrid{
+ grid-template-columns: 1fr;
+}
+
+}
+.produto-card{
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.30);
+  padding: 12px;
+  box-shadow: 0 16px 30px rgba(0,0,0,0.22);
+}
+
+.produto-name{
+  margin: 0;
+  font-weight: 900;
+}
+
+.produto-meta{
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hr{
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  margin: 14px 0;
+}
+
+/* ===== toast ===== */
+.toast{
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 80;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: var(--text);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  max-width: 360px;
+  font-weight: 900;
+  font-size: 13px;
+}
+
+/* ===== micro animação suave ===== */
+@media (prefers-reduced-motion: no-preference){
+  .card, .item, .modal, .produto-card{
+    animation: pop .18s ease both;
   }
-  to {
-    transform: rotate(360deg);
+  @keyframes pop{
+    from{ transform: translateY(6px); opacity: .0; }
+    to{ transform: translateY(0px); opacity: 1; }
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+}html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
